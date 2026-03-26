@@ -14,12 +14,13 @@ class BookFileFrame extends JFrame {
     // =========================
     // GUI Components
     // =========================
-    private JTextField titleField, authorField, descField, priceField, bookIdField;
+    private JTextField titleField, authorField, priceField, bookIdField;
+    private JTextArea descField;
     private JRadioButton availableRadio, notAvailableRadio;
 
     public BookFileFrame() {
         setTitle("Book File");
-        setSize(500, 500);
+        setSize(600, 750);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -33,28 +34,52 @@ class BookFileFrame extends JFrame {
 
         JPanel formPanel = new JPanel(new GridBagLayout());
         formPanel.setBackground(Color.WHITE);
-        formPanel.setBorder(BorderFactory.createEmptyBorder(20, 30, 20, 30));
+        formPanel.setBorder(BorderFactory.createEmptyBorder(25, 40, 25, 40));
         formPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     
         mainPanel.add(formPanel);
 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.insets = new Insets(12, 12, 12, 12);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         // =========================
         // Form Fields
         // =========================
 
-        titleField = new JTextField(15);
-        authorField = new JTextField(15);
-        descField = new JTextField(15);
-        priceField = new JTextField(15);
-        bookIdField = new JTextField(15);
+        titleField = new JTextField(18);
+        authorField = new JTextField(18);
+        priceField = new JTextField(18);
+        bookIdField = new JTextField(18);
+
+        titleField.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        authorField.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        priceField.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        bookIdField.setFont(new Font("SansSerif", Font.PLAIN, 14));
 
         addField(formPanel, gbc, 0, "Title:", titleField);
         addField(formPanel, gbc, 1, "Author:", authorField);
-        addField(formPanel, gbc, 2, "Description:", descField);
+
+        // Description field
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        JLabel descLabel = new JLabel("Description:");
+        descLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        formPanel.add(descLabel, gbc);
+
+        descField = new JTextArea(6, 18);
+        descField.setLineWrap(true);
+        descField.setWrapStyleWord(true);
+        descField.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        
+        JScrollPane scrollPane = new JScrollPane(descField);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.weighty = 0.3;
+        formPanel.add(scrollPane, gbc);
+
         addField(formPanel, gbc, 3, "Price:", priceField);
         addField(formPanel, gbc, 4, "Book ID:", bookIdField);
 
@@ -63,7 +88,10 @@ class BookFileFrame extends JFrame {
         // =========================
         gbc.gridx = 0;
         gbc.gridy = 5;
-        formPanel.add(new JLabel("Availability:"), gbc);
+        gbc.weighty = 0;
+        JLabel availLabel = new JLabel("Availability:");
+        availLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        formPanel.add(availLabel, gbc);
 
         gbc.gridx = 1;
         JPanel radioPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -71,6 +99,11 @@ class BookFileFrame extends JFrame {
 
         availableRadio = new JRadioButton("Available");
         notAvailableRadio = new JRadioButton("Not Available");
+        
+        availableRadio.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        notAvailableRadio.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        availableRadio.setBackground(Color.WHITE);
+        notAvailableRadio.setBackground(Color.WHITE);
 
         ButtonGroup group = new ButtonGroup();
         group.add(availableRadio);
@@ -88,12 +121,22 @@ class BookFileFrame extends JFrame {
         gbc.gridy = 6;
         gbc.gridwidth = 2;
 
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 15));
         buttonPanel.setBackground(Color.WHITE);
                 
         JButton saveBtn = new RoundedButton("Save");
         JButton resetBtn = new RoundedButton("Reset");
         JButton exitBtn = new RoundedButton("Exit");
+
+        // Button font size
+        saveBtn.setFont(new Font("SansSerif", Font.BOLD, 14));
+        resetBtn.setFont(new Font("SansSerif", Font.BOLD, 14));
+        exitBtn.setFont(new Font("SansSerif", Font.BOLD, 14));
+        
+        // Button preferred size
+        saveBtn.setPreferredSize(new Dimension(100, 45));
+        resetBtn.setPreferredSize(new Dimension(100, 45));
+        exitBtn.setPreferredSize(new Dimension(100, 45));
 
         // Button colors 
         saveBtn.setBackground(new Color(144, 238, 144));
@@ -186,7 +229,10 @@ class BookFileFrame extends JFrame {
     private void addField(JPanel panel, GridBagConstraints gbc, int y, String label, JTextField field) {
         gbc.gridx = 0;
         gbc.gridy = y;
-        panel.add(new JLabel(label), gbc);
+        gbc.weighty = 0;
+        JLabel jLabel = new JLabel(label);
+        jLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        panel.add(jLabel, gbc);
 
         gbc.gridx = 1;
         panel.add(field, gbc);
